@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>深淵盧恩輸入器</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:24px;background:#100e18;color:#e8ddff;font-family:Arial,"Noto Sans TC",sans-serif}
+main{max-width:700px;margin:auto}
+h1{color:#c5a8ff;text-align:center}
+p{color:#b9adc9;text-align:center}
+textarea{width:100%;min-height:130px;padding:14px;border:1px solid #68518b;border-radius:12px;background:#1c1828;color:#fff;font-size:17px}
+button{padding:12px 18px;margin:8px 5px 8px 0;border:1px solid #8c70b8;border-radius:9px;background:#38294d;color:white;font-size:15px}
+#output{min-height:100px;white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;border:1px solid #68518b;border-radius:12px;background:#1c1828;font-size:23px;line-height:1.8}
+small{color:#9e91b2}
+</style>
+</head>
+<body>
+<main>
+<h1>☾ 深淵盧恩輸入器 ☽</h1>
+<p>將文字轉換成神祕的符文</p>
+<textarea id="input" placeholder="在這裡輸入中文、英文或句子……"></textarea>
+<div>
+<button onclick="convertText()">轉換符文</button>
+<button onclick="copyText()">複製結果</button>
+<button onclick="clearText()">清空</button>
+</div>
+<div id="output">符文結果會出現在這裡……</div>
+<p><small>這是一套自創的文字替換符號，不是真正的古代語言。</small></p>
+</main>
+<script>
+const symbols = [
+"ᚨ","ᚱ","ᚲ","ᚷ","ᚹ","ᚺ","ᚾ","ᛁ","ᛃ","ᛇ",
+"ᛈ","ᛉ","ᛊ","ᛏ","ᛒ","ᛖ","ᛗ","ᛚ","ᛜ","ᛞ",
+"ᛟ","ᚦ","ᚢ","ᚠ","ᛝ","ᛞ","ᛟ","ᚹ","ᚺ","ᛉ",
+"☽","☿","♄","♆","♇","⟁","⌘","⟡","𖤐","𓂀",
+"𓆣","𓃭","𓅓","𓊹","𓋹","𓇼","𓁹","𓆙","𓉸","𓃠"
+];
+const chars = [
+"我","你","他","她","它","是","不","有","沒","要",
+"想","愛","恨","去","來","看","聽","說","吃","喝",
+"天","地","水","火","風","雨","月","日","星","夜",
+"暗","光","夢","魂","神","魔","鬼","龍","狐","眼",
+"血","骨","心","門","生","死","影","霧","空","貓"
+];
+const map = {};
+chars.forEach((ch,i)=>map[ch]=symbols[i]);
+function convertText(){
+ const input=document.getElementById("input").value;
+ let result="";
+ for(const ch of input) result+=map[ch]||ch;
+ document.getElementById("output").textContent=result||"請先輸入文字";
+}
+async function copyText(){
+ const out=document.getElementById("output");
+ const text=out.textContent;
+ try{
+  await navigator.clipboard.writeText(text);
+  alert("已複製！");
+ }catch(e){
+  const area=document.createElement("textarea");
+  area.value=text;document.body.appendChild(area);
+  area.select();document.execCommand("copy");area.remove();
+  alert("已嘗試複製結果");
+ }
+}
+function clearText(){
+ document.getElementById("input").value="";
+ document.getElementById("output").textContent="符文結果會出現在這裡……";
+}
+</script>
+</body>
+</html>
