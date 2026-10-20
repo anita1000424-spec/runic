@@ -45,8 +45,18 @@ const chars = [
 "暗","光","夢","魂","神","魔","鬼","龍","狐","眼",
 "血","骨","心","門","生","死","影","霧","空","貓"
 ];
+
 const map = {};
 chars.forEach((ch,i)=>map[ch]=symbols[i]);
+
+// 額外新增 100 個中文字
+const extraChars = [..."朋友家們好嗎呢吧呀了到從和與但因所可請謝對錯真假中大小多少新舊快慢美醜強弱冷熱遠近高低上下左右前後內外開關走跑飛游睡醒笑哭怒怕喜悲孤獨自由希望命運時現在未過始結束界宇宙深淵古老秘力祭壇咒語符文石森林海"];
+
+extraChars.forEach((ch,i) => {
+  map[ch] = symbols[i % symbols.length] +
+    symbols[Math.floor(i / symbols.length)];
+});
+
 function convertText(){
  const input=document.getElementById("input").value;
  let result="";
