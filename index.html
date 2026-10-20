@@ -46,7 +46,8 @@ const chars = [
 "血","骨","心","門","生","死","影","霧","空","貓"
 ];
 
-
+const map = {};
+chars.forEach((ch,i)=>map[ch]=symbols[i]);
 const extraChars = [];
 let codePoint = 0x4E00;
 
